@@ -8,14 +8,6 @@ package Proyecto_Estructuras2;
  *
  * @author Miguel Sulbarán
  */
-
-/**
- * Main de Prueba
- * Usado SOLO para verificar que las estructuras funcionan correctamente
- * antes de conectarlas a la interfaz gráfica.
- */
-
-
 public class mainprueba {
 
     public static void main(String[] args) {

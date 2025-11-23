@@ -123,4 +123,27 @@ public class TablitaHash {
         
         return SB.toString();
     }
+    
+    
+    /**
+    * Función MostrarTodo
+    * 
+    * Recorre la tabla completa y muestra todos los resúmenes guardados,
+    * incluyendo el título y su información general.
+    * 
+    * @return Un String con todos los resúmenes.
+    */
+    public String MostrarTodo() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < Capacidad; i++) {
+            NodoLista actual = Tabla[i].pFirst;
+            while (actual != null) {
+                sb.append(actual.data.toString()).append("\n");
+                actual = actual.pNext;
+            }
+        }
+        return sb.toString();
+        }  
+
 }

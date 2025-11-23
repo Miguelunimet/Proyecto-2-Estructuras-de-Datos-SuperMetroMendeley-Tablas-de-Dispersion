@@ -55,17 +55,17 @@ public class Lista {
      * @return Referencia al último nodo, o null si la lista está vacía.
      */
     public NodoLista Ultimo() {
-        return Final();
+        return NodoFinal();
     }
 
     /**
-     * Funcion Final
+     * Funcion NodoFinal
      * 
      * Retorna el último nodo de la lista.
      * 
      * @return Nodo final de la lista, o null si está vacía.
      */
-    public NodoLista Final() {
+    public NodoLista NodoFinal() {
         if (pFirst == null) {
             return null;
         } else {
@@ -90,7 +90,7 @@ public class Lista {
             this.pFirst = pNew;
             this.Longitud++;
         } else {
-            NodoLista pValor = this.Final();
+            NodoLista pValor = this.NodoFinal();
             pNew.pNext = pValor.pNext;
             pValor.pNext = pNew;
             this.Longitud++;
