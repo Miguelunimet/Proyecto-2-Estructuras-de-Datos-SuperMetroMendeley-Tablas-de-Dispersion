@@ -16,8 +16,8 @@ package Proyecto_Estructuras2;
  */
 public class TablitaHash {
     
-    private Lista[] tabla;
-    private int capacidad;    
+    private Lista[] Tabla;
+    private int Capacidad;    
     
     /**
      * Constructor de la TablitaHash.
@@ -25,11 +25,11 @@ public class TablitaHash {
      */
     
     public TablitaHash(int capacidad) {
-        this.capacidad = capacidad;
-        this.tabla = new Lista[capacidad];
+        this.Capacidad = capacidad;
+        this.Tabla = new Lista[capacidad];
         
     for (int i = 0; i < capacidad; i++) {
-            this.tabla[i] = new Lista();
+            this.Tabla[i] = new Lista();
         }
     }
     
@@ -40,19 +40,87 @@ public class TablitaHash {
      * @return Un índice entero entre 0 y capacidad-1.
      */
     
-    private int obtenerIndice(String clave) {
+    private int Obtener_Indice(String clave) {
         if (clave == null) return 0;
         
-        long hash = 0; 
-        int primo = 37; 
+        long Hash = 0; 
+        int Num_Primo = 37; 
         
         for (int i = 0; i < clave.length(); i++) {
             char caracter = clave.charAt(i);
-            hash = (hash * primo) + caracter;
+            Hash = (Hash * Num_Primo) + caracter;
         }
         
-        hash = Math.abs(hash);        
+        Hash = Math.abs(Hash);        
       
-        return (int) (hash % capacidad);
+        return (int) (Hash % Capacidad);
+    }
+    
+    /**
+     * Método Insertar
+     * Se agrega un nuevo resumen a la tabla revisando que no este repetido
+     * @param resumen que es el objeto Resumen a guardar
+     * @return "true" si se agrego correctamente o "false" si ya existía o el dato no era valido
+     */
+    
+       public boolean Insertar(Resumen resumen) {
+        if (resumen == null || resumen.titulo == null) {
+            return false;
+        }
+
+        int indice = Obtener_Indice(resumen.titulo);
+        Resumen encontrado = Tabla[indice].BuscarTitulo(resumen.titulo);
+        
+        if (encontrado == null) {
+            Tabla[indice].Insertar(resumen);
+            return true;
+        } else {
+            return false;
+        }               
+    }
+    
+    /**
+     * Método Buscar
+     * Busca un resumen por su título exacto mediante "Obtener_Indice"
+     * @param titulo El título de la investigación que se quiere buscar
+     * @return El objeto Resumen si es que existe o en tal caso null si no se encuentra
+     */
+       
+         public Resumen Buscar(String titulo) {
+        if (titulo == null) 
+            return null;
+
+        int indice = Obtener_Indice(titulo);
+        
+        return Tabla[indice].BuscarTitulo(titulo);
+    }
+         
+    /**
+     * Método Obtener_Estadisticas
+     * Se logra generar un reporte del estado actual de la tabla con sus valores,
+     * esto es util para mostrar en la interfaz gráfica la estadisticas de memoria
+     * @return Un String con la información
+     */
+         
+    public String Obtener_Estadisticas() {
+        StringBuilder SB = new StringBuilder();
+        int totalResumenes = 0;
+        int casillasOcupadas = 0;
+        
+        SB.append("Estado de la Tabla Hash\n");
+        for (int i = 0; i < Capacidad; i++) {
+            int tamañoLista = Tabla[i].Tamano();
+            if (tamañoLista > 0) {
+                casillasOcupadas++;
+                totalResumenes += tamañoLista;
+            }
+        }
+        
+        SB.append("La capacidad total es: ").append(Capacidad).append("\n");
+        SB.append("Las casillas usadas son: ").append(casillasOcupadas).append("\n");
+        SB.append("El total de resúmenes es: ").append(totalResumenes).append("\n");
+        SB.append("El factor de carga es: ").append(String.format("%.2f", (double)totalResumenes/Capacidad)).append("\n");
+        
+        return SB.toString();
     }
 }
