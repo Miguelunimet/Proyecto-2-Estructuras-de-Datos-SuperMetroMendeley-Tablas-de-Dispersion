@@ -10,7 +10,7 @@ package Proyecto_Estructuras2;
  * Es un árbol AVL utilizado para almacenar texto, por ejemplo, autores o palabras clave,
  * Cada nodo contiene además una lista de resúmenes donde aparece la clave,
  * el árbol se mantiene balanceado mediante rotaciones simples y dobles, dependiendo
- * de en donde se encuentre el desbalance, además tien funciones para insertar claves, 
+ * de en donde se encuentre el desbalance, además tiene funciones para insertar claves, 
  * buscar información y recorrer el contenido del árbol en orden alfabético.
  * 
  * @author Miguel Sulbarán
