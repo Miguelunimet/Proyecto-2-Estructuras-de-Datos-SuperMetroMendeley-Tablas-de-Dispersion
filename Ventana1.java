@@ -21,16 +21,32 @@ public class Ventana1 extends javax.swing.JFrame {
      * Creates new form Ventana1
      */
     public Ventana1() {
-        tablaTitulos = new TablitaHash(101);
-        arbolAutores = new ArbolAVL();
-        arbolPalabras = new ArbolAVL();
+        initComponents(); 
         
-        initComponents();    
+        tablaTitulos = new TablitaHash(100);
+        arbolAutores = new ArbolAVL();
+        arbolPalabras = new ArbolAVL();       
+          
         
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+       
     }
-
+    
+    public Ventana1(TablitaHash t, ArbolAVL a, ArbolAVL p) {
+        initComponents();
+        
+        this.tablaTitulos = t;
+        this.arbolAutores = a;
+        this.arbolPalabras = p;
+        
+        this.setLocationRelativeTo(null);
+        
+        if (jTextArea1 != null) {          
+            jTextArea1.setText("");
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,10 +63,17 @@ public class Ventana1 extends javax.swing.JFrame {
         BotonCargar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
+        Boton_Siguiente = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        Lista_de_resumenes = new javax.swing.JList<>();
+        Boton_Analizar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Salir");
@@ -59,41 +82,78 @@ public class Ventana1 extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Sitka Text", 0, 36)); // NOI18N
         jLabel1.setText("Sistema de Gestión de Resúmenes");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, -1, 50));
 
-        jLabel2.setText("Por favor cargue un archivo .txt que contenga los perfiles y relaciones básicas para inicializar el programa.");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel2.setText("Lista de los resumenes cargados");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, 20));
 
+        BotonCargar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BotonCargar.setText("Cargar Archivo de Texto (.txt)");
         BotonCargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BotonCargarActionPerformed(evt);
             }
         });
-        jPanel1.add(BotonCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
+        jPanel1.add(BotonCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 220, 30));
 
         jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
         jTextArea1.setRows(5);
+        jTextArea1.setWrapStyleWord(true);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 170, 400, 180));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, 420, 220));
 
-        jButton2.setText("Siguiente");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, -1, -1));
+        Boton_Siguiente.setText("Siguiente");
+        Boton_Siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_SiguienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Boton_Siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 440, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Por favor cargue un archivo de tipo \".txt\" que contenga el resumen para inicializar el programa.");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+
+        Lista_de_resumenes.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        jScrollPane2.setViewportView(Lista_de_resumenes);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, 370, 220));
+
+        Boton_Analizar.setText("Analizar");
+        Boton_Analizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Boton_AnalizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Boton_Analizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        jLabel4.setText("Aca se verifica el resumen cargado y se ven sus caracteristicas");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, -1, -1));
+
+        jLabel5.setText("Click aquí para ver caracteristicas del resumen una vez cargado");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 440, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 867, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -146,29 +206,48 @@ public class Ventana1 extends javax.swing.JFrame {
                     this,
                     "Archivo cargado correctamente",
                     "Carga exitosa",
+                    
                     javax.swing.JOptionPane.INFORMATION_MESSAGE
                     );
-                    String texto = "Título:\n" + resumen.titulo + "\n\n"
-                                + "Autores:\n" + resumen.autores + "\n\n"
-                                + "Resumen:\n" + resumen.resumen + "\n\n"
-                                + "Palabras clave:\n" + resumen.palabrasclaves + "\n";
-                    jTextArea1.setText(texto);
+                    
+                    actualizarListaVisual();                  
+                 
 
                 } else {
                     javax.swing.JOptionPane.showMessageDialog(this,
                     "El resumen con el título:\n\"" + resumen.titulo + "\"\n Ya fue cargado.",
                     "Título duplicado",
                     javax.swing.JOptionPane.WARNING_MESSAGE
-                );
-                // Si no quieres mostrar nada en el JTextArea, lo puedes limpiar:
+                );                
                 jTextArea1.setText("");
                 }
 
             } else {
-                jTextArea1.setText("El archivo seleccionado no tiene el formato correcto.");
+                jTextArea1.setText("El archivo seleccionado no tiene el formato correcto.");    
             }
         }
     }//GEN-LAST:event_BotonCargarActionPerformed
+
+    private void Boton_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SiguienteActionPerformed
+        Ventana2 v2 = new Ventana2(this.tablaTitulos, this.arbolAutores, this.arbolPalabras);
+        v2.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_Boton_SiguienteActionPerformed
+
+    private void Boton_AnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AnalizarActionPerformed
+        String tituloSeleccionado = Lista_de_resumenes.getSelectedValue();
+        
+        if (tituloSeleccionado == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debes seleccionar una investigación de la lista.");
+            return;            
+        }
+        Resumen r = this.tablaTitulos.Buscar(tituloSeleccionado);
+        if (r != null) {
+            mostrarAnalisisResumen(r);
+        }   
+        
+    }//GEN-LAST:event_Boton_AnalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,15 +283,71 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void actualizarListaVisual() {
+        String[] titulos = this.tablaTitulos.ObtenerTodosLosTitulos();
+        javax.swing.DefaultListModel<String> modelo = new javax.swing.DefaultListModel<>();
+        for (String t : titulos) {
+            modelo.addElement(t);
+        }
+        
+        Lista_de_resumenes.setModel(modelo);
+    
+    }
 
+    private void mostrarAnalisisResumen(Resumen r) {
+        
+        jTextArea1.setText(""); 
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ANÁLISIS DE FRECUENCIA\n\n");
+        sb.append("-TÍTULO: ").append(r.titulo).append("\n\n");
+        sb.append("-AUTORES: ").append(r.autores).append("\n\n\n");
+        
+        sb.append("-FRECUENCIA CON LAS QUE SALEN LAS PALABRAS CLAVE\n\n");
+        
+        String[] palabrasClave = r.palabrasclaves.split(",");
+        String textoResumen = r.resumen.toLowerCase();
+        
+        for (String palabra : palabrasClave) {
+            String pLimpia = palabra.trim();
+            if(pLimpia.isEmpty()) continue;
+            
+            
+            int frecuencia = 0;
+            int indice = 0;
+            while ((indice = textoResumen.indexOf(pLimpia.toLowerCase(), indice)) != -1) {
+                frecuencia++;
+                indice += pLimpia.length();
+            }
+            
+            sb.append("- La palabra: '").append(pLimpia).append("' aparece: ")
+              .append(frecuencia).append(" veces\n\n");
+        }
+        
+        sb.append("\n\n");
+        sb.append("RESUMEN:\n\n").append(r.resumen);
+        
+        jTextArea1.setText(sb.toString());
+        // Nos aseguramos de volver arriba del texto
+        jTextArea1.setCaretPosition(0);
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BotonCargar;
+    private javax.swing.JButton Boton_Analizar;
+    private javax.swing.JButton Boton_Siguiente;
+    private javax.swing.JList<String> Lista_de_resumenes;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

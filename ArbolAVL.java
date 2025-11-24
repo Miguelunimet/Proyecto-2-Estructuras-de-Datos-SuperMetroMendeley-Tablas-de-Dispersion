@@ -39,6 +39,15 @@ public class ArbolAVL {
     public NodoArbolAVL ObtenerRaiz() {
         return raiz;
     }
+    
+    /**
+    * Método Vaciar
+    * 
+    * Elimina todos los nodos del árbol, dejándolo vacío.
+    */
+    public void Vaciar() {
+        raiz = null;
+    }
 
     /**
      * Función ObtenerAltura
@@ -139,6 +148,9 @@ public class ArbolAVL {
      * @param resumen resumen asociado a la clave.
      */
     public void Insertar(String info, Resumen resumen) {
+        if (info == null || resumen == null) {
+        return;
+        }
         raiz = InsertarRecursivo(raiz, info, resumen);
     }
 
@@ -258,5 +270,57 @@ public class ArbolAVL {
             System.out.println(nodo.info + " (aparece en " + nodo.listaResumenes.Tamano() + " resumenes)");
             InOrdenRecursivo(nodo.HD);
         }
+    }
+    
+    /**
+     * Método ObtenerClavesEnOrden
+     * 
+     * Devuelve un arreglo con todas las claves del árbol
+     * (autores o palabras clave) en orden alfabético.
+     * 
+     * @return Arreglo de cadenas con las claves.
+     */
+    public String[] ObtenerClavesEnOrden() {
+        int total = ContarNodos(raiz);
+        String[] claves = new String[total];
+        LlenarInOrden(raiz, claves, new int[]{0});
+        return claves;
+    }
+    
+    /**
+     * Función Contar Nodos
+     * 
+     * Cuenta el número total de nodos del árbol.
+     * 
+     * @param nodo Nodo desde el cual se comienza el conteo.
+     * @return La cantidad total de nodos del subárbol.
+     */
+    public int ContarNodos(NodoArbolAVL nodo) {
+        if (nodo == null) {
+            return 0;
+        }
+        return 1 + ContarNodos(nodo.HI) + ContarNodos(nodo.HD);
+    }
+    
+    /**
+     * Método LlenarEnOrden
+     * 
+     * Recorre el árbol en orden (izquierda - raíz - derecha)
+     * y va copiando cada clave encontrada en el arreglo.
+     * El parámetro 'indice' se usa como contador para mantener
+     * la posición actual dentro del arreglo.
+     * 
+     * @param nodo nodo actual de recorrido
+     * @param arreglo arreglo donde se almacenarán las claves del árbol.
+     * @param indice arreglo de tamaño 1 que lleva la posición actual de inserción.
+     */
+    public void LlenarInOrden(NodoArbolAVL nodo, String[] arreglo, int[] indice) {
+        if (nodo == null) {
+            return;
+        }
+        LlenarInOrden(nodo.HI, arreglo, indice);
+        arreglo[indice[0]] = nodo.info;
+        indice[0] = indice[0] + 1;
+        LlenarInOrden(nodo.HD, arreglo, indice);
     }
 }
