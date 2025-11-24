@@ -145,5 +145,43 @@ public class TablitaHash {
         }
         return sb.toString();
         }  
-
+    
+    /**
+     * Método ObtenerTodosLosTitulos
+     * Recorre la tabla y devuelve un arreglo con los nombres de los resumenes.
+     */
+    public String[] ObtenerTodosLosTitulos() {
+        int total = 0;        
+        for (int i = 0; i < Capacidad; i++) {
+            total += Tabla[i].Tamano();
+        }
+        
+        String[] listaTitulos = new String[total];
+        int contador = 0;        
+        
+        for (int i = 0; i < Capacidad; i++) {
+            if (!Tabla[i].EsVacio()) {
+                
+                NodoLista aux = Tabla[i].pFirst; 
+                while (aux != null) {
+                    listaTitulos[contador] = aux.data.titulo;
+                    contador++;
+                    aux = aux.pNext;
+                }
+            }
+        }
+       for (int i = 0; i < listaTitulos.length - 1; i++) {
+            for (int j = 0; j < listaTitulos.length - 1 - i; j++) {
+                
+                if (listaTitulos[j].compareToIgnoreCase(listaTitulos[j + 1]) > 0) {                    
+                    
+                    String temporal = listaTitulos[j];
+                    listaTitulos[j] = listaTitulos[j + 1];
+                    listaTitulos[j + 1] = temporal;
+                }
+            }
+        }
+        
+        return listaTitulos;
+    }
 }

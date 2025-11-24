@@ -55,13 +55,15 @@ public class CargarArchivo {
                 }
 
                
-                if (Liniesita.toLowerCase().startsWith("Palabras Claves:")) {
+                if (Liniesita.toLowerCase().startsWith("palabras claves:")) {
                     Leyendo_los_Resumenes = false;                
                     palabrasClaves = Liniesita.substring(16).trim();
                     continue;
                 }
                 
                 if (Leyendo_los_Autores) {
+                    if (Liniesita.equalsIgnoreCase("Autores"))
+                        continue;
                     if (autores.length() > 0) autores.append("\n");
                     autores.append(Liniesita);
                 } else if (Leyendo_los_Resumenes) {
