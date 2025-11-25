@@ -43,8 +43,16 @@ public class Ventana1 extends javax.swing.JFrame {
         
         if (jTextArea1 != null) {          
             jTextArea1.setText("");
+            
+        java.io.File f = new java.io.File("resumenes.txt");
+        if (f.exists()) {
+        tablaTitulos.CargarArchivo("resumenes.txt", arbolAutores, arbolPalabras);
+        actualizarListaVisual();
         }
     }
+    
+    }
+
     
     
     /**
@@ -160,7 +168,9 @@ public class Ventana1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+        this.tablaTitulos.GuardarArchivo("resumenes.txt");
+        
+        System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void BotonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCargarActionPerformed
@@ -284,6 +294,12 @@ public class Ventana1 extends javax.swing.JFrame {
         });
     }
     
+    /**
+     * Método actualizarListaVisual
+     * 
+     * Actualiza la lista de resúmenes
+     * cargando todos los títulos actualmente almacenados en la tabla hash.
+     */
     private void actualizarListaVisual() {
         String[] titulos = this.tablaTitulos.ObtenerTodosLosTitulos();
         javax.swing.DefaultListModel<String> modelo = new javax.swing.DefaultListModel<>();
@@ -295,14 +311,23 @@ public class Ventana1 extends javax.swing.JFrame {
     
     }
 
+    
+    /**
+     * Método mostrarAnalisisResumen
+     * 
+     * Muestra en el área de texto la frecuencia
+     * de las palabras clave del resumen indicado.
+     *
+     * @param r resumen que se va a analizar y mostrar.
+     */
     private void mostrarAnalisisResumen(Resumen r) {
         
         jTextArea1.setText(""); 
         
         StringBuilder sb = new StringBuilder();
         sb.append(" ANÁLISIS DE FRECUENCIA\n\n");
-        sb.append("-TÍTULO: ").append(r.titulo).append("\n\n");
-        sb.append("-AUTORES: ").append(r.autores).append("\n\n\n");
+        sb.append("-Título: ").append(r.titulo).append("\n\n");
+        sb.append("-Autores: ").append(r.autores).append("\n\n\n");
         
         sb.append("-FRECUENCIA CON LAS QUE SALEN LAS PALABRAS CLAVE\n\n");
         
@@ -329,7 +354,6 @@ public class Ventana1 extends javax.swing.JFrame {
         sb.append("RESUMEN:\n\n").append(r.resumen);
         
         jTextArea1.setText(sb.toString());
-        // Nos aseguramos de volver arriba del texto
         jTextArea1.setCaretPosition(0);
     }
     

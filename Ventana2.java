@@ -123,13 +123,13 @@ public class Ventana2 extends javax.swing.JFrame {
         });
         jPanel1.add(Limpiar_Texto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, -1, -1));
 
-        Salir_del_programa.setText("Salir");
+        Salir_del_programa.setText("Guardar y Salir");
         Salir_del_programa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Salir_del_programaActionPerformed(evt);
             }
         });
-        jPanel1.add(Salir_del_programa, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 380, -1, -1));
+        jPanel1.add(Salir_del_programa, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, -1, -1));
 
         ListaAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ListaAutores.addActionListener(new java.awt.event.ActionListener() {
@@ -184,10 +184,10 @@ public class Ventana2 extends javax.swing.JFrame {
         resultados_de_busqueda.setText("");
         if (encontrado != null) {
         resultados_de_busqueda.append("-REPORTE DE INVESTIGACIÓN \n\n");
-        resultados_de_busqueda.append("-TÍTULO: " + encontrado.titulo + "\n\n");
-        resultados_de_busqueda.append("-AUTORES: " + encontrado.autores + "\n\n");
-        resultados_de_busqueda.append("-PALABRAS CLAVE: " + encontrado.palabrasclaves + "\n\n");        
-        resultados_de_busqueda.append("-RESUMEN:\n\n" + encontrado.resumen + "\n");
+        resultados_de_busqueda.append("-Título: " + encontrado.titulo + "\n\n");
+        resultados_de_busqueda.append("-Autores: " + encontrado.autores + "\n\n");
+        resultados_de_busqueda.append("-Palabras Clave: " + encontrado.palabrasclaves + "\n\n");        
+        resultados_de_busqueda.append("-R:\n\n" + encontrado.resumen + "\n");
         Buscar.setText("");     
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "No se pudo encontrar ningún resumen con ese título exacto.");
@@ -203,7 +203,10 @@ public class Ventana2 extends javax.swing.JFrame {
     }//GEN-LAST:event_Limpiar_TextoActionPerformed
 
     private void Salir_del_programaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir_del_programaActionPerformed
-        this.dispose();
+    this.tablaTitulos.GuardarArchivo("resumenes.txt");
+
+    javax.swing.JOptionPane.showMessageDialog(this, "Datos guardados exitosamente.");
+    System.exit(0);
     }//GEN-LAST:event_Salir_del_programaActionPerformed
 
     private void busqueda_palclavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busqueda_palclavActionPerformed
@@ -215,7 +218,7 @@ public class Ventana2 extends javax.swing.JFrame {
     }
 
     Lista resultados = this.arbolPalabras.Buscar(palabra);
-    mostrarListaResultados(resultados, "PALABRA CLAVE");
+    mostrarListaResultados(resultados, "Palabra Clave");
     }//GEN-LAST:event_busqueda_palclavActionPerformed
 
     private void busqueda_autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busqueda_autorActionPerformed
@@ -227,7 +230,7 @@ public class Ventana2 extends javax.swing.JFrame {
         }
 
         Lista resultados = this.arbolAutores.Buscar(autor);
-        mostrarListaResultados(resultados, "AUTOR");
+        mostrarListaResultados(resultados, "Autor");
     }//GEN-LAST:event_busqueda_autorActionPerformed
 
     private void ListaAutoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaAutoresActionPerformed
@@ -241,26 +244,35 @@ public class Ventana2 extends javax.swing.JFrame {
     private void ListaPalabrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaPalabrasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ListaPalabrasActionPerformed
-       
+    
+    /**
+     * Método mostrarListaResultados
+     * 
+     * Muestra en el área de texto todos los resúmenes contenidos
+     * en la lista resultado de una búsqueda, indicando el tipo de filtro.
+     *
+     * @param lista       lista de resúmenes a mostrar.
+     * @param tipoBusqueda texto descriptivo del filtro aplicado (autor, palabra clave, etc).
+     */
     private void mostrarListaResultados(Lista lista, String tipoBusqueda) {
     resultados_de_busqueda.setText("");
     
     if (lista != null && !lista.EsVacio()) {
-        resultados_de_busqueda.append("RESULTADOS POR " + tipoBusqueda.toUpperCase() + "\n\n");
+        resultados_de_busqueda.append("Rresultados por " + tipoBusqueda.toUpperCase() + "\n\n");
         resultados_de_busqueda.append("-Total de resumenes encontrados: " + lista.Tamano() + "\n\n");
         
         NodoLista aux = lista.pFirst;
         
         int contador = 1;
         while (aux != null) {
-            Resumen r = aux.data; // Accedemos al resumen guardado en el nodo
+            Resumen r = aux.data;
             
             resultados_de_busqueda.append("\n-Resumen N°" + contador + "\n\n");
-            resultados_de_busqueda.append("-TÍTULO: " + r.titulo + "\n\n");
-            resultados_de_busqueda.append("-AUTORES: " + r.autores + "\n\n");
-            resultados_de_busqueda.append("-RESUMEN: \n\n" +  r.resumen + "\n\n");
+            resultados_de_busqueda.append("-Título: " + r.titulo + "\n\n");
+            resultados_de_busqueda.append("-Autores: " + r.autores + "\n\n");
+            resultados_de_busqueda.append("-Resumen: \n\n" +  r.resumen + "\n\n");
             
-            aux = aux.pNext; // Avanzamos al siguiente nodo
+            aux = aux.pNext;
             contador++;
             
             Buscar.setText("");
