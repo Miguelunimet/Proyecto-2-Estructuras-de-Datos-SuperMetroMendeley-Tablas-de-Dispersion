@@ -1,8 +1,10 @@
+package Proyecto_Estructuras2;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Proyecto_Estructuras2;
+
 
 /**
  * Clase TablitaHash
@@ -146,10 +148,14 @@ public class TablitaHash {
         return sb.toString();
         }  
     
-    /**
-     * Método ObtenerTodosLosTitulos
-     * Recorre la tabla y devuelve un arreglo con los nombres de los resumenes.
-     */
+/**
+  * Método ObtenerTodosLosTitulos
+  * 
+  * Recorre toda la tabla hash, cuenta cuántos resúmenes hay,
+  * guarda sus títulos en un arreglo y luego los ordena alfabéticamente.
+  * 
+  * @return Arreglo con todos los títulos cargados.
+  */
     public String[] ObtenerTodosLosTitulos() {
         int total = 0;        
         for (int i = 0; i < Capacidad; i++) {
@@ -183,5 +189,111 @@ public class TablitaHash {
         }
         
         return listaTitulos;
+    }
+    
+    /**
+     * Metodo GuardarArchivo
+     * 
+    * Guarda todos los resúmenes en un archivo de texto para verlo nuevamente.
+    * Cada resumen se escribe en un bloque separado.
+     * @param ruta
+    */
+    public void GuardarArchivo(String ruta) {
+        try (java.io.PrintWriter pw = new java.io.PrintWriter(ruta)) {
+
+            for (int i = 0; i < Capacidad; i++) {
+                NodoLista aux = Tabla[i].pFirst;
+
+                while (aux != null) {
+                    Resumen r = aux.data;
+
+                    pw.println(r.titulo);
+                    pw.println("Autores:" + r.autores);
+                    pw.println("Palabras:" + r.palabrasclaves);
+                    pw.println("Resumen:" + r.resumen.replace("\n", "\\n"));
+                    pw.println("\n\n");
+
+                    aux = aux.pNext;
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al guardar el archivo: " + e.getMessage());
+        }
+    }
+    
+    /**
+    * Método CargarArchivo
+    * 
+    * Carga todos los resúmenes desde un archivo previamente guardado.
+    * 
+    * @param ruta          ruta del archivo a leer.
+    * @param arbolAutores  árbol AVL donde se registran los autores.
+    * @param arbolPalabras árbol AVL donde se registran las palabras clave.
+    */
+    public void CargarArchivo(String ruta, ArbolAVL arbolAutores, ArbolAVL arbolPalabras) {
+        if (ruta == null) {
+            return;
+        }
+        
+        try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.FileReader(ruta))) {
+
+            String linea;
+            String titulo = "";
+            String autores = "";
+            String palabras = "";
+            String resumen = "";
+
+            while ((linea = br.readLine()) != null) {
+
+                if (linea.equals("\n\n")) {
+                    Resumen r = new Resumen(titulo, autores, resumen, palabras);
+
+                    boolean insertado = this.Insertar(r);
+
+                    if (insertado) {
+                        if (arbolAutores != null && r.autores != null && r.autores.length() > 0) {
+                            String[] arregloAutores = r.autores.split(",");
+                            for (int i = 0; i < arregloAutores.length; i++) {
+                                String autor = arregloAutores[i].trim();
+                                if (autor.length() > 0) {
+                                    arbolAutores.Insertar(autor, r);
+                                }
+                            }
+                        }
+
+                        if (arbolPalabras != null && r.palabrasclaves != null && r.palabrasclaves.length() > 0) {
+                            String[] arregloPalabras = r.palabrasclaves.split(",");
+                            for (int j = 0; j < arregloPalabras.length; j++) {
+                                String palabra = arregloPalabras[j].trim();
+                                if (palabra.length() > 0) {
+                                    arbolPalabras.Insertar(palabra, r);
+                                }
+                            }
+                        }
+                    }
+
+                    titulo = "";
+                    autores = "";
+                    palabras = "";
+                    resumen = "";
+
+                } else if (linea.startsWith("Autores:")) {
+                    autores = linea.substring(8).trim();
+
+                } else if (linea.startsWith("Palabras:")) {
+                    palabras = linea.substring(9).trim();
+
+                } else if (linea.startsWith("Resumen:")) {
+                    resumen = linea.substring(8).trim().replace("\\n", "\n");
+
+                } else {
+                    titulo = linea.trim();
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al cargar archivo: " + e.getMessage());
+        }
     }
 }
