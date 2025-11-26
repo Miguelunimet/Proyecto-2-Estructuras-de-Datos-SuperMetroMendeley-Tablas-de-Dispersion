@@ -1,12 +1,15 @@
+package Proyecto_Estructuras2;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Proyecto_Estructuras2;
+
 
 /**
  * Representa la ventana de inicio de la aplicación.
- * En la ventana1 (JFrame) se carga el archivo inicial.
+ * En la ventana1 (JFrame) se carga el archivo inicial y se muestran las caractersiticas
+ * principales del resumen.
  * 
  * @author Miguel Sulbaran, Rafael Álvarez
  * @version 1.0
@@ -16,9 +19,13 @@ public class Ventana1 extends javax.swing.JFrame {
     private TablitaHash tablaTitulos;
     private ArbolAVL arbolAutores;
     private ArbolAVL arbolPalabras;
-    
+
     /**
-     * Creates new form Ventana1
+     * Constructor de la clase Ventana1.
+     * 
+     * Inicializa los componentes gráficos de la interfaz y crea nuevas instancias vacías 
+     * para la tabla hash de títulos y los árboles AVL de autores y palabras clave, 
+     * preparando la aplicación para una nueva ejecución desde cero.
      */
     public Ventana1() {
         initComponents(); 
@@ -32,6 +39,18 @@ public class Ventana1 extends javax.swing.JFrame {
        
     }
     
+    /**
+     * Segundo Constructor de la clase Ventana1.
+     * 
+     * A diferencia del anterior constructuor, este inicializa la ventana recibiendo las estructuras de datos 
+     * ya existentes para mantener la consistencia de la información al navegar entre ventanas.
+     * Además, verifica automáticamente si existe un archivo de persistencia ("resumenes.txt") 
+     * para cargar los datos previos y actualizar la lista visual de resúmenes disponibles.
+     * 
+     * @param t Instancia de la Tabla Hash con los títulos cargados.
+     * @param a Instancia del Árbol AVL con los autores cargados.
+     * @param p Instancia del Árbol AVL con las palabras clave cargadas.
+     */
     public Ventana1(TablitaHash t, ArbolAVL a, ArbolAVL p) {
         initComponents();
         
@@ -167,12 +186,34 @@ public class Ventana1 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción del jButton1
+     * 
+     * Acción del botón de salir, se encarga de preservar la información actual 
+     * invocando el guardado de la tabla hash en el archivo de texto "resumenes.txt"
+     * para asegurar la persistencia de los datos, y posteriormente finaliza la 
+     * ejecución de la aplicación cerrando el sistema.
+     * 
+     * @param evt Evento de acción generado por la interfaz gráfica al hacer clic.
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.tablaTitulos.GuardarArchivo("resumenes.txt");
         
         System.exit(0);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    /**
+     * Acción del botón BotonCargar
+     * 
+     * Botón que gestiona la acción de cargar un nuevo archivo de resumen al sistema.
+     * Abre un selector de archivos para que el usuario elija un documento de texto,
+     * lo procesa para convertirlo en objeto Resumen e intenta insertarlo en la Tabla Hash;
+     * si la operación es exitosa (no existe duplicado), desglosa y registra los autores y
+     * palabras clave en sus respectivos Árboles AVL y actualiza la lista visual,
+     * notificando al usuario mediante ventanas emergentes sobre el éxito o fracaso de la operación.
+     *
+     * @param evt Evento de acción generado al presionar el botón de carga.
+     */
     private void BotonCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCargarActionPerformed
         javax.swing.JFileChooser selector = new javax.swing.JFileChooser();
         selector.setDialogTitle("Seleccione un archivo de resumen");
@@ -238,6 +279,16 @@ public class Ventana1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BotonCargarActionPerformed
 
+    /**
+     * Acción del Botón Siguiente
+     * 
+     * Boton que genera la transición hacia la ventana 2. Crea una nueva instancia 
+     * de la clase Ventana2 transfiriendo las referencias de las estructuras de datos actuales 
+     * (Tabla Hash y Árboles AVL) para preservar la información en memoria, y realiza el 
+     * cambio de interfaz visual ocultando la ventana actual y mostrando la nueva.
+     * 
+     * * @param evt Evento de acción generado al presionar el botón de navegación.
+     */
     private void Boton_SiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_SiguienteActionPerformed
         Ventana2 v2 = new Ventana2(this.tablaTitulos, this.arbolAutores, this.arbolPalabras);
         v2.setVisible(true);
@@ -245,6 +296,15 @@ public class Ventana1 extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_Boton_SiguienteActionPerformed
 
+    /**
+     * Acción del Botón Analizar
+     * 
+     * El botón gestiona la solicitud de análisis de un resumen. Obtiene el título seleccionado 
+     * y valida que exista una selección activa; si es así, recupera el objeto Resumen 
+     * correspondiente desde la Tabla Hash y delega la visualización de los detalles.
+     * 
+     * * @param evt Evento de acción generado al presionar el botón de análisis.
+     */
     private void Boton_AnalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_AnalizarActionPerformed
         String tituloSeleccionado = Lista_de_resumenes.getSelectedValue();
         
@@ -256,13 +316,9 @@ public class Ventana1 extends javax.swing.JFrame {
         if (r != null) {
             mostrarAnalisisResumen(r);
         }   
-        
     }//GEN-LAST:event_Boton_AnalizarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+        public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

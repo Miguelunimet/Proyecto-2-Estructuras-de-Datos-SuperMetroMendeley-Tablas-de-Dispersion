@@ -1,8 +1,10 @@
+package Proyecto_Estructuras2;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Proyecto_Estructuras2;
+
 
 /**
  * Clase TablitaHash
@@ -209,7 +211,7 @@ public class TablitaHash {
                     pw.println("Autores:" + r.autores);
                     pw.println("Palabras:" + r.palabrasclaves);
                     pw.println("Resumen:" + r.resumen.replace("\n", "\\n"));
-                    pw.println("---");
+                    pw.println("\n\n");
 
                     aux = aux.pNext;
                 }
@@ -244,7 +246,7 @@ public class TablitaHash {
 
             while ((linea = br.readLine()) != null) {
 
-                if (linea.equals("---")) {
+                if (linea.equals("\n\n")) {
                     Resumen r = new Resumen(titulo, autores, resumen, palabras);
 
                     boolean insertado = this.Insertar(r);

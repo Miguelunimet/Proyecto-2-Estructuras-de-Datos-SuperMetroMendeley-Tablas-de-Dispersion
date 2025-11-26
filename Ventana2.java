@@ -1,12 +1,19 @@
+package Proyecto_Estructuras2;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package Proyecto_Estructuras2;
+
 
 /**
+ * Clase que genera una segunda interfaz del sistema, diseñada para facilitar la búsqueda 
+ * y recuperación de información sobre los resumenes. Actúa como un controlador que gestiona 
+ * las consultas del usuario interactuando con las estructuras de datos (Tabla Hash y Árboles AVL),
+ * permitiendo filtrar el catálogo de resumenes por título, autor o palabras clave.
  *
  * @author Rafael Álvarez, Miguel Sulbarán
+ * @version 1.0
  */
 public class Ventana2 extends javax.swing.JFrame {    
     
@@ -14,7 +21,18 @@ public class Ventana2 extends javax.swing.JFrame {
     private ArbolAVL arbolAutores;
     private ArbolAVL arbolPalabras;
     
-   
+   /**
+     * Constructor de la Ventana de Búsqueda
+     * 
+     * Inicializa la interfaz integrando las estructuras de datos principales 
+     * (Tabla Hash y Árboles AVL) provenientes de la ventana anterior, Además,
+     * configura la visualización inicial centrada en pantalla y ejecuta 
+     * la carga automática de los listados de autores y palabras clave.
+     * 
+     * @param t Referenceia a la Tabla Hash de títulos para realizar búsquedas exactas.
+     * @param a Referencia al Árbol AVL de autores para poblar el filtro de autores.
+     * @param p Referencia al Árbol AVL de palabras clave para poblar el filtro de palabras.
+     */
     public Ventana2(TablitaHash t, ArbolAVL a, ArbolAVL p) {
         initComponents();
         
@@ -52,6 +70,8 @@ public class Ventana2 extends javax.swing.JFrame {
         Salir_del_programa = new javax.swing.JButton();
         ListaAutores = new javax.swing.JComboBox<>();
         ListaPalabras = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,21 +84,21 @@ public class Ventana2 extends javax.swing.JFrame {
                 Boton_VolverActionPerformed(evt);
             }
         });
-        jPanel1.add(Boton_Volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, -1, -1));
+        jPanel1.add(Boton_Volver, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Sitka Text", 0, 24)); // NOI18N
         jLabel2.setText("Busqueda Mediante Filtros:");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
 
         Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 250, -1));
+        jPanel1.add(Buscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 190, -1));
 
-        jLabel1.setText("A continuacion ingresa la palabra que deseas buscar:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, -1));
+        jLabel1.setText("Selecciona el autor que deseas buscar:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, -1, -1));
 
         Busqueda_titulo.setText("Titulo");
         Busqueda_titulo.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +106,7 @@ public class Ventana2 extends javax.swing.JFrame {
                 Busqueda_tituloActionPerformed(evt);
             }
         });
-        jPanel1.add(Busqueda_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 130, 70, -1));
+        jPanel1.add(Busqueda_titulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 70, -1));
 
         busqueda_autor.setText("Autor");
         busqueda_autor.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +114,7 @@ public class Ventana2 extends javax.swing.JFrame {
                 busqueda_autorActionPerformed(evt);
             }
         });
-        jPanel1.add(busqueda_autor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 60, -1));
+        jPanel1.add(busqueda_autor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 150, 70, -1));
 
         busqueda_palclav.setText("Palabras Clave");
         busqueda_palclav.addActionListener(new java.awt.event.ActionListener() {
@@ -102,10 +122,10 @@ public class Ventana2 extends javax.swing.JFrame {
                 busqueda_palclavActionPerformed(evt);
             }
         });
-        jPanel1.add(busqueda_palclav, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 120, -1));
+        jPanel1.add(busqueda_palclav, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, 120, -1));
 
-        jLabel3.setText("Selecciona el filtro de que deseas aplicar:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, -1, -1));
+        jLabel3.setText("A continuación selecciona el tipo de filtro para aplicar:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 40, -1, -1));
 
         resultados_de_busqueda.setColumns(20);
         resultados_de_busqueda.setLineWrap(true);
@@ -113,7 +133,7 @@ public class Ventana2 extends javax.swing.JFrame {
         resultados_de_busqueda.setWrapStyleWord(true);
         jScrollPane1.setViewportView(resultados_de_busqueda);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 690, 190));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 730, 190));
 
         Limpiar_Texto.setText("Limpiar");
         Limpiar_Texto.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +141,7 @@ public class Ventana2 extends javax.swing.JFrame {
                 Limpiar_TextoActionPerformed(evt);
             }
         });
-        jPanel1.add(Limpiar_Texto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 380, -1, -1));
+        jPanel1.add(Limpiar_Texto, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 390, -1, -1));
 
         Salir_del_programa.setText("Guardar y Salir");
         Salir_del_programa.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +149,7 @@ public class Ventana2 extends javax.swing.JFrame {
                 Salir_del_programaActionPerformed(evt);
             }
         });
-        jPanel1.add(Salir_del_programa, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, -1, -1));
+        jPanel1.add(Salir_del_programa, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 390, -1, -1));
 
         ListaAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ListaAutores.addActionListener(new java.awt.event.ActionListener() {
@@ -137,7 +157,7 @@ public class Ventana2 extends javax.swing.JFrame {
                 ListaAutoresActionPerformed(evt);
             }
         });
-        jPanel1.add(ListaAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 170, -1));
+        jPanel1.add(ListaAutores, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 110, 170, -1));
 
         ListaPalabras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ListaPalabras.addActionListener(new java.awt.event.ActionListener() {
@@ -145,26 +165,41 @@ public class Ventana2 extends javax.swing.JFrame {
                 ListaPalabrasActionPerformed(evt);
             }
         });
-        jPanel1.add(ListaPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 170, -1));
+        jPanel1.add(ListaPalabras, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, 170, -1));
+
+        jLabel4.setText("Ingresa el título que deseas buscar:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jLabel5.setText("Selecciona la palabra clave que deseas buscar:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 790, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Acción de Boton Volver
+     * 
+     * Regresa a la pantalla principal. Crea una nueva instancia de la Ventana 1
+     * pasándole las estructuras de datos actuales para no perder la información
+     * y cierra esta ventana.
+     * 
+     * @param evt Evento del clic.
+     */
     private void Boton_VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Boton_VolverActionPerformed
         Ventana1 v1 = new Ventana1(this.tablaTitulos, this.arbolAutores, this.arbolPalabras);
         v1.setVisible(true);
@@ -172,6 +207,16 @@ public class Ventana2 extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_Boton_VolverActionPerformed
 
+    /**
+     * Botón Busqueda titulo
+     * 
+     * Realiza la búsqueda de una investigación específica usando su título exacto. 
+     * Toma el texto ingresado, verifica que no esté vacío y consulta la Tabla Hash; 
+     * si encuentra el resumen, muestra su información (autores, palabras clave y contenido) 
+     * en el área de resultados, o de lo contrario notifica al usuario que no hay coincidencias.
+     * 
+     * @param evt Evento del clic.
+     */
     private void Busqueda_tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Busqueda_tituloActionPerformed
        String tituloBuscado = Buscar.getText().trim();
        
@@ -192,23 +237,47 @@ public class Ventana2 extends javax.swing.JFrame {
     } else {
         javax.swing.JOptionPane.showMessageDialog(this, "No se pudo encontrar ningún resumen con ese título exacto.");
         Buscar.setText("");        
-    }
-
-    
-       
+    }      
     }//GEN-LAST:event_Busqueda_tituloActionPerformed
 
+    /**
+     * Botón Limpiar Texto
+     * 
+     * Borra el contenido actual del área de resultados. Establece el campo de texto 
+     * en blanco para limpiar la pantalla y permitir al usuario visualizar nuevas 
+     * consultas de forma ordenada.
+     * 
+     * @param evt Evento del clic.
+     */
     private void Limpiar_TextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Limpiar_TextoActionPerformed
         resultados_de_busqueda.setText("");
     }//GEN-LAST:event_Limpiar_TextoActionPerformed
 
+    /**
+     * Botón Salir del Programa
+     * 
+     * Cierra la aplicación. Antes de finalizar, guarda automáticamente 
+     * toda la información en el archivo de texto, confirma al usuario que los datos 
+     * se han almacenado correctamente y detiene la ejecución.
+     * 
+     * @param evt Evento del clic.
+     */
     private void Salir_del_programaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Salir_del_programaActionPerformed
     this.tablaTitulos.GuardarArchivo("resumenes.txt");
 
     javax.swing.JOptionPane.showMessageDialog(this, "Datos guardados exitosamente.");
-    System.exit(0);
+    System.exit(0); 
     }//GEN-LAST:event_Salir_del_programaActionPerformed
 
+    /**
+     * Acción del botón Búsqueda PalClav
+     * 
+     * Toma la palabra calve seleccionada de la lista desplegable y verifica que sea válida. 
+     * Luego, consulta el Árbol AVL de palabras clave para recuperar todos los resúmenes 
+     * asociados a ese tema y los envía a mostrar en el área de resultados.
+     * 
+     * @param evt Evento del clic.
+     */
     private void busqueda_palclavActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busqueda_palclavActionPerformed
     String palabra = (String) ListaPalabras.getSelectedItem();
     
@@ -221,6 +290,15 @@ public class Ventana2 extends javax.swing.JFrame {
     mostrarListaResultados(resultados, "Palabra Clave");
     }//GEN-LAST:event_busqueda_palclavActionPerformed
 
+    /**
+     * Acción del botón Búsqueda Autor
+     * 
+     * Obtiene el autor seleccionado del menú desplegable y valida que no esté vacío. 
+     * Luego, consulta el Árbol AVL de autores para encontrar todas las investigaciones 
+     * relacionadas y las envía a mostrar en la sección de resultados.
+     * 
+     * @param evt Evento del clic.
+     */
     private void busqueda_autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busqueda_autorActionPerformed
         String autor = (String) ListaAutores.getSelectedItem();
 
@@ -343,6 +421,8 @@ public class Ventana2 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea resultados_de_busqueda;
